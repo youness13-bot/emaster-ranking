@@ -14,604 +14,845 @@
 
 <style>
 *{
- box-sizing:border-box;
- margin:0;
- padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 :root{
- --blue:#075ff5;
- --blue2:#0348c7;
- --dark:#06162d;
- --bg:#f5f8fc;
- --white:#fff;
- --text:#14243b;
- --muted:#7b899c;
- --border:#e4ebf3;
- --green:#159568;
+    --blue:#075ff5;
+    --blue-dark:#06162d;
+    --blue-light:#edf4ff;
+    --bg:#f5f8fc;
+    --white:#fff;
+    --text:#14243b;
+    --muted:#7b899c;
+    --border:#e3eaf3;
+    --green:#159568;
+    --red:#d64d57;
 }
 
 html{
- scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
- background:var(--bg);
- color:var(--text);
- font-family:Cairo,sans-serif;
- min-height:100vh;
- overflow-x:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Cairo,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
 }
 
-/* BACKGROUND */
-
 body:before{
- content:"";
- position:fixed;
- width:500px;
- height:500px;
- border-radius:50%;
- background:rgba(7,95,245,.07);
- filter:blur(90px);
- top:-180px;
- left:-150px;
- pointer-events:none;
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:rgba(7,95,245,.06);
+    filter:blur(90px);
+    top:-180px;
+    left:-150px;
+    pointer-events:none;
 }
 
 body:after{
- content:"";
- position:fixed;
- width:450px;
- height:450px;
- border-radius:50%;
- background:rgba(7,95,245,.05);
- filter:blur(100px);
- right:-180px;
- bottom:-150px;
- pointer-events:none;
+    content:"";
+    position:fixed;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    background:rgba(7,95,245,.05);
+    filter:blur(100px);
+    right:-180px;
+    bottom:-150px;
+    pointer-events:none;
 }
 
 /* HEADER */
 
 .header{
- position:sticky;
- top:0;
- z-index:100;
- height:72px;
- background:rgba(255,255,255,.92);
- backdrop-filter:blur(15px);
- border-bottom:1px solid var(--border);
+    height:72px;
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(255,255,255,.93);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--border);
 }
 
 .header-inner{
- width:min(1200px,94%);
- height:100%;
- margin:auto;
- display:flex;
- align-items:center;
- justify-content:space-between;
+    width:min(1200px,94%);
+    height:100%;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
 .brand{
- display:flex;
- align-items:center;
- gap:11px;
+    display:flex;
+    align-items:center;
+    gap:11px;
 }
 
 .logo-box{
- width:43px;
- height:43px;
- border-radius:12px;
- background:linear-gradient(135deg,var(--blue),var(--blue2));
- color:white;
- display:flex;
- align-items:center;
- justify-content:center;
- font-family:Oswald;
- font-size:16px;
- font-weight:700;
- box-shadow:0 7px 20px rgba(7,95,245,.22);
+    width:43px;
+    height:43px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#075ff5,#0348c7);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Oswald;
+    font-weight:700;
+    box-shadow:0 7px 20px rgba(7,95,245,.22);
 }
 
 .brand-name{
- font-family:Oswald;
- font-size:21px;
- letter-spacing:.3px;
+    font-family:Oswald;
+    font-size:21px;
 }
 
 .brand-sub{
- color:var(--muted);
- font-size:6px;
- font-weight:900;
- letter-spacing:1.4px;
- margin-top:-2px;
+    color:var(--muted);
+    font-size:6px;
+    font-weight:900;
+    letter-spacing:1.4px;
 }
 
 .admin-btn{
- text-decoration:none;
- color:var(--blue);
- background:#edf4ff;
- padding:9px 13px;
- border-radius:9px;
- font-size:7px;
- font-weight:900;
- transition:.2s;
+    text-decoration:none;
+    color:var(--blue);
+    background:var(--blue-light);
+    padding:9px 13px;
+    border-radius:9px;
+    font-size:7px;
+    font-weight:900;
+    transition:.2s;
 }
 
 .admin-btn:hover{
- background:var(--blue);
- color:white;
+    background:var(--blue);
+    color:white;
 }
 
 /* HERO */
 
 .hero{
- width:min(1200px,94%);
- margin:38px auto 25px;
- position:relative;
- overflow:hidden;
- background:linear-gradient(135deg,#06162d,#0b2a57);
- border-radius:22px;
- min-height:260px;
- display:flex;
- align-items:center;
- padding:35px;
- box-shadow:0 20px 45px rgba(6,22,45,.13);
+    width:min(1200px,94%);
+    margin:38px auto 25px;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(135deg,#06162d,#0b2a57);
+    border-radius:22px;
+    min-height:260px;
+    display:flex;
+    align-items:center;
+    padding:35px;
+    box-shadow:0 20px 45px rgba(6,22,45,.13);
 }
 
 .hero:before{
- content:"";
- position:absolute;
- width:330px;
- height:330px;
- border:1px solid rgba(255,255,255,.08);
- border-radius:50%;
- right:-90px;
- top:-120px;
+    content:"";
+    position:absolute;
+    width:330px;
+    height:330px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:50%;
+    right:-90px;
+    top:-120px;
 }
 
 .hero:after{
- content:"";
- position:absolute;
- width:230px;
- height:230px;
- border:1px solid rgba(255,255,255,.06);
- border-radius:50%;
- right:30px;
- bottom:-150px;
+    content:"";
+    position:absolute;
+    width:230px;
+    height:230px;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:50%;
+    right:30px;
+    bottom:-150px;
 }
 
 .hero-content{
- position:relative;
- z-index:2;
+    position:relative;
+    z-index:2;
 }
 
 .hero-small{
- color:#6ea0ff;
- font-size:8px;
- font-weight:900;
- letter-spacing:2px;
+    color:#6ea0ff;
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:2px;
 }
 
 .hero-title{
- color:white;
- font-family:Oswald;
- font-size:48px;
- line-height:1;
- margin:8px 0 10px;
+    color:white;
+    font-family:Oswald;
+    font-size:48px;
+    line-height:1;
+    margin:8px 0 10px;
 }
 
 .hero-text{
- color:rgba(255,255,255,.68);
- font-size:8px;
- max-width:480px;
- line-height:1.8;
+    color:rgba(255,255,255,.68);
+    font-size:8px;
+    max-width:480px;
+    line-height:1.8;
 }
 
 .season-pill{
- display:inline-flex;
- align-items:center;
- gap:7px;
- margin-top:18px;
- padding:8px 12px;
- border-radius:30px;
- background:rgba(255,255,255,.08);
- border:1px solid rgba(255,255,255,.1);
- color:white;
- font-size:7px;
- font-weight:900;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    margin-top:18px;
+    padding:8px 12px;
+    border-radius:30px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.1);
+    color:white;
+    font-size:7px;
+    font-weight:900;
 }
 
 .dot{
- width:7px;
- height:7px;
- background:#29d995;
- border-radius:50%;
- box-shadow:0 0 12px #29d995;
- animation:pulse 1.6s infinite;
+    width:7px;
+    height:7px;
+    background:#29d995;
+    border-radius:50%;
+    box-shadow:0 0 12px #29d995;
+    animation:pulse 1.6s infinite;
 }
 
 @keyframes pulse{
- 0%,100%{transform:scale(1);opacity:1}
- 50%{transform:scale(.65);opacity:.5}
+    0%,100%{transform:scale(1);opacity:1}
+    50%{transform:scale(.65);opacity:.5}
 }
 
-/* CONTENT */
+/* MAIN */
 
 .container{
- width:min(1200px,94%);
- margin:0 auto 70px;
+    width:min(1200px,94%);
+    margin:0 auto 70px;
 }
 
 /* STATS */
 
 .stats{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:12px;
- margin-bottom:18px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:18px;
 }
 
 .stat{
- background:white;
- border:1px solid var(--border);
- border-radius:15px;
- padding:17px;
- position:relative;
- overflow:hidden;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:17px;
+    position:relative;
+    overflow:hidden;
 }
 
 .stat:after{
- content:"";
- position:absolute;
- width:60px;
- height:60px;
- background:rgba(7,95,245,.05);
- border-radius:50%;
- right:-20px;
- top:-20px;
+    content:"";
+    position:absolute;
+    width:60px;
+    height:60px;
+    background:rgba(7,95,245,.05);
+    border-radius:50%;
+    right:-20px;
+    top:-20px;
 }
 
 .stat-label{
- color:var(--muted);
- font-size:6px;
- font-weight:900;
- letter-spacing:.8px;
+    color:var(--muted);
+    font-size:6px;
+    font-weight:900;
+    letter-spacing:.8px;
 }
 
 .stat-number{
- font-family:Oswald;
- font-size:27px;
- color:var(--blue);
- margin-top:2px;
+    font-family:Oswald;
+    font-size:27px;
+    color:var(--blue);
+    margin-top:2px;
 }
 
 /* SECTION */
 
 .section-head{
- display:flex;
- justify-content:space-between;
- align-items:end;
- margin:28px 0 13px;
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin:28px 0 13px;
 }
 
 .section-small{
- color:var(--blue);
- font-size:7px;
- font-weight:900;
- letter-spacing:1.5px;
+    color:var(--blue);
+    font-size:7px;
+    font-weight:900;
+    letter-spacing:1.5px;
 }
 
 .section-title{
- font-family:Oswald;
- font-size:27px;
- margin-top:2px;
+    font-family:Oswald;
+    font-size:27px;
+    margin-top:2px;
 }
 
 .section-desc{
- color:var(--muted);
- font-size:7px;
+    color:var(--muted);
+    font-size:7px;
 }
 
 /* RANKING */
 
 .ranking-card{
- background:white;
- border:1px solid var(--border);
- border-radius:18px;
- overflow:hidden;
- box-shadow:0 10px 30px rgba(10,35,70,.04);
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(10,35,70,.04);
 }
 
 .table-scroll{
- overflow-x:auto;
+    overflow-x:auto;
 }
 
 table{
- width:100%;
- min-width:850px;
- border-collapse:collapse;
+    width:100%;
+    min-width:850px;
+    border-collapse:collapse;
 }
 
 thead{
- background:#f8fafd;
+    background:#f8fafd;
 }
 
 th{
- padding:13px 12px;
- color:#8492a5;
- font-size:6px;
- font-weight:900;
- text-align:center;
- border-bottom:1px solid var(--border);
- white-space:nowrap;
+    padding:13px 12px;
+    color:#8492a5;
+    font-size:6px;
+    font-weight:900;
+    text-align:center;
+    border-bottom:1px solid var(--border);
+    white-space:nowrap;
 }
 
 th:nth-child(2){
- text-align:left;
+    text-align:left;
 }
 
 td{
- padding:12px;
- border-bottom:1px solid #edf1f5;
- font-size:8px;
- text-align:center;
+    padding:12px;
+    border-bottom:1px solid #edf1f5;
+    font-size:8px;
+    text-align:center;
 }
 
 tbody tr{
- transition:.2s;
+    transition:.2s;
+    cursor:pointer;
 }
 
 tbody tr:hover{
- background:#f8fbff;
+    background:#f8fbff;
+    transform:scale(1.002);
 }
 
 tbody tr:last-child td{
- border-bottom:0;
+    border-bottom:0;
 }
 
 /* RANK */
 
 .rank-number{
- font-family:Oswald;
- font-size:17px;
- color:#687990;
+    font-family:Oswald;
+    font-size:17px;
+    color:#687990;
 }
 
 .rank-top{
- width:32px;
- height:32px;
- border-radius:9px;
- display:flex;
- align-items:center;
- justify-content:center;
- margin:auto;
- font-family:Oswald;
- font-size:14px;
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-family:Oswald;
+    font-size:14px;
 }
 
 .first{
- background:#fff4d6;
- color:#9b7100;
+    background:#fff4d6;
+    color:#9b7100;
 }
 
 .second{
- background:#edf1f5;
- color:#65717d;
+    background:#edf1f5;
+    color:#65717d;
 }
 
 .third{
- background:#f8e8dc;
- color:#9a6543;
+    background:#f8e8dc;
+    color:#9a6543;
 }
 
 /* CLAN */
 
 .clan-cell{
- display:flex;
- align-items:center;
- gap:10px;
- text-align:left;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-align:left;
 }
 
 .clan-logo{
- width:42px;
- height:42px;
- object-fit:contain;
- padding:5px;
- border-radius:10px;
- background:#f2f6fa;
- border:1px solid #edf1f5;
+    width:42px;
+    height:42px;
+    object-fit:contain;
+    padding:5px;
+    border-radius:10px;
+    background:#f2f6fa;
+    border:1px solid #edf1f5;
 }
 
 .clan-name{
- font-weight:900;
- font-size:8px;
+    font-weight:900;
+    font-size:8px;
 }
 
 .clan-tag{
- color:var(--muted);
- font-size:6px;
- margin-top:1px;
+    color:var(--muted);
+    font-size:6px;
 }
 
 .country{
- color:#687990;
- font-size:7px;
+    color:#687990;
+    font-size:7px;
 }
 
 .points{
- font-family:Oswald;
- font-size:19px;
- color:var(--blue);
+    font-family:Oswald;
+    font-size:19px;
+    color:var(--blue);
 }
 
 .win{
- color:var(--green);
- font-weight:900;
+    color:var(--green);
+    font-weight:900;
 }
 
 .loss{
- color:#d54d56;
- font-weight:900;
+    color:var(--red);
+    font-weight:900;
+}
+
+/* LOADING */
+
+.loading{
+    padding:50px 20px;
+    text-align:center;
+    color:var(--muted);
+    font-size:8px;
+}
+
+.loader{
+    width:30px;
+    height:30px;
+    border:3px solid #e4ebf3;
+    border-top-color:var(--blue);
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+    margin:0 auto 12px;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
 }
 
 /* EMPTY */
 
-.loading{
- padding:50px 20px;
- text-align:center;
- color:var(--muted);
- font-size:8px;
-}
-
-.loader{
- width:30px;
- height:30px;
- border:3px solid #e4ebf3;
- border-top-color:var(--blue);
- border-radius:50%;
- animation:spin .8s linear infinite;
- margin:0 auto 12px;
-}
-
-@keyframes spin{
- to{transform:rotate(360deg)}
-}
-
 .empty{
- padding:50px 20px;
- text-align:center;
+    padding:50px 20px;
+    text-align:center;
 }
 
 .empty-title{
- font-family:Oswald;
- font-size:22px;
+    font-family:Oswald;
+    font-size:22px;
 }
 
 .empty-text{
- color:var(--muted);
- font-size:7px;
- margin-top:4px;
+    color:var(--muted);
+    font-size:7px;
+    margin-top:4px;
+}
+
+/* CLAN DETAILS */
+
+.details-section{
+    display:none;
+    margin-top:30px;
+    animation:detailsIn .45s ease;
+}
+
+.details-section.show{
+    display:block;
+}
+
+@keyframes detailsIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.details-top{
+    background:linear-gradient(135deg,#06162d,#0b2a57);
+    border-radius:20px;
+    padding:25px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
+
+.details-top:before{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:50%;
+    right:-80px;
+    top:-120px;
+}
+
+.details-top-inner{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.clan-profile{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.profile-logo{
+    width:78px;
+    height:78px;
+    object-fit:contain;
+    padding:9px;
+    background:white;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+.profile-label{
+    color:#6ea0ff;
+    font-size:7px;
+    font-weight:900;
+    letter-spacing:1.5px;
+}
+
+.profile-name{
+    font-family:Oswald;
+    font-size:32px;
+    line-height:1.05;
+    margin-top:3px;
+}
+
+.profile-tag{
+    color:rgba(255,255,255,.55);
+    font-size:7px;
+    margin-top:4px;
+}
+
+.profile-country{
+    color:rgba(255,255,255,.75);
+    font-size:7px;
+    margin-top:5px;
+}
+
+.close-details{
+    border:0;
+    background:rgba(255,255,255,.1);
+    color:white;
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    font-size:20px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.close-details:hover{
+    background:rgba(255,255,255,.18);
+}
+
+.rank-badge{
+    text-align:center;
+    min-width:100px;
+}
+
+.rank-badge-label{
+    color:rgba(255,255,255,.55);
+    font-size:6px;
+    font-weight:900;
+}
+
+.rank-badge-number{
+    font-family:Oswald;
+    font-size:48px;
+    line-height:1;
+    margin-top:2px;
+}
+
+/* DETAIL STATS */
+
+.detail-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:12px;
+}
+
+.detail-stat{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px;
+    text-align:center;
+}
+
+.detail-stat-label{
+    color:var(--muted);
+    font-size:6px;
+    font-weight:900;
+}
+
+.detail-stat-value{
+    font-family:Oswald;
+    font-size:25px;
+    color:var(--blue);
+    margin-top:2px;
+}
+
+.detail-stat-value.green{
+    color:var(--green);
+}
+
+.detail-stat-value.red{
+    color:var(--red);
+}
+
+.detail-stat-value.dark{
+    color:var(--text);
+}
+
+/* PROGRESS */
+
+.progress-card{
+    margin-top:12px;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:18px;
+}
+
+.progress-head{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:9px;
+}
+
+.progress-title{
+    font-family:Oswald;
+    font-size:17px;
+}
+
+.progress-value{
+    font-size:7px;
+    color:var(--muted);
+}
+
+.progress-bar{
+    height:8px;
+    background:#edf2f7;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#075ff5,#4b8cff);
+    border-radius:20px;
+    transition:width 1s ease;
 }
 
 /* FOOTER */
 
 .footer{
- border-top:1px solid var(--border);
- background:white;
- padding:22px 0;
+    border-top:1px solid var(--border);
+    background:white;
+    padding:22px 0;
 }
 
 .footer-inner{
- width:min(1200px,94%);
- margin:auto;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:10px;
+    width:min(1200px,94%);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
 }
 
 .footer-text{
- color:var(--muted);
- font-size:6px;
+    color:var(--muted);
+    font-size:6px;
 }
 
 .footer-brand{
- font-family:Oswald;
- font-size:15px;
+    font-family:Oswald;
+    font-size:15px;
 }
 
 /* ANIMATION */
 
 .fade{
- animation:fade .55s ease both;
+    animation:fade .55s ease both;
 }
 
 @keyframes fade{
- from{
-  opacity:0;
-  transform:translateY(12px);
- }
- to{
-  opacity:1;
-  transform:translateY(0);
- }
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 /* MOBILE */
 
 @media(max-width:700px){
 
-.header{
- height:64px;
-}
+    .header{
+        height:64px;
+    }
 
-.logo-box{
- width:39px;
- height:39px;
-}
+    .logo-box{
+        width:39px;
+        height:39px;
+    }
 
-.brand-name{
- font-size:18px;
-}
+    .brand-name{
+        font-size:18px;
+    }
 
-.hero{
- margin-top:20px;
- min-height:230px;
- padding:25px;
- border-radius:18px;
-}
+    .hero{
+        margin-top:20px;
+        min-height:230px;
+        padding:25px;
+        border-radius:18px;
+    }
 
-.hero-title{
- font-size:39px;
-}
+    .hero-title{
+        font-size:39px;
+    }
 
-.hero-text{
- font-size:7px;
-}
+    .hero-text{
+        font-size:7px;
+    }
 
-.stats{
- grid-template-columns:1fr 1fr;
-}
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
 
-.stat:last-child{
- grid-column:1/-1;
-}
+    .stat:last-child{
+        grid-column:1/-1;
+    }
 
-.section-title{
- font-size:24px;
-}
+    .section-title{
+        font-size:24px;
+    }
 
-.footer-inner{
- flex-direction:column;
- align-items:flex-start;
-}
+    .details-top{
+        padding:18px;
+    }
 
+    .details-top-inner{
+        align-items:flex-start;
+    }
+
+    .clan-profile{
+        align-items:flex-start;
+    }
+
+    .profile-logo{
+        width:62px;
+        height:62px;
+    }
+
+    .profile-name{
+        font-size:26px;
+    }
+
+    .rank-badge{
+        display:none;
+    }
+
+    .detail-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
 }
 
 @media(max-width:430px){
 
-.admin-btn{
- padding:8px 10px;
-}
+    .admin-btn{
+        padding:8px 10px;
+    }
 
-.hero{
- padding:22px;
-}
+    .hero{
+        padding:22px;
+    }
 
-.hero-title{
- font-size:35px;
-}
+    .hero-title{
+        font-size:35px;
+    }
 
-.stats{
- gap:8px;
-}
+    .stats{
+        gap:8px;
+    }
 
-.stat{
- padding:13px;
-}
+    .stat{
+        padding:13px;
+    }
 
+    .profile-name{
+        font-size:23px;
+    }
 }
 </style>
 </head>
@@ -629,13 +870,8 @@ EM
 </div>
 
 <div>
-<div class="brand-name">
-E-MASTER
-</div>
-
-<div class="brand-sub">
-CLAN RANKING PLATFORM
-</div>
+<div class="brand-name">E-MASTER</div>
+<div class="brand-sub">CLAN RANKING PLATFORM</div>
 </div>
 
 </div>
@@ -742,7 +978,7 @@ CLAN RANKING
 </h2>
 
 <div class="section-desc">
-Official standings of the current season.
+Click on any clan to view its complete statistics.
 </div>
 
 </div>
@@ -761,21 +997,13 @@ Official standings of the current season.
 <tr>
 
 <th>#</th>
-
 <th>CLAN</th>
-
 <th>COUNTRY</th>
-
 <th>PTS</th>
-
 <th>M</th>
-
 <th>W</th>
-
 <th>D</th>
-
 <th>L</th>
-
 <th>TITLES</th>
 
 </tr>
@@ -807,6 +1035,208 @@ Loading ranking...
 </div>
 
 </div>
+
+
+<!-- CLAN DETAILS -->
+
+<section id="detailsSection" class="details-section">
+
+<div class="section-head">
+
+<div>
+
+<div class="section-small">
+CLAN PROFILE
+</div>
+
+<h2 class="section-title">
+TEAM DETAILS
+</h2>
+
+<div class="section-desc">
+Complete statistics for this season.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="details-top">
+
+<div class="details-top-inner">
+
+<div class="clan-profile">
+
+<img
+id="detailsLogo"
+class="profile-logo"
+src="https://placehold.co/200x200/eaf2ff/075ff5?text=EM"
+>
+
+<div>
+
+<div class="profile-label">
+OFFICIAL CLAN
+</div>
+
+<div class="profile-name" id="detailsName">
+—
+</div>
+
+<div class="profile-tag" id="detailsTag">
+—
+</div>
+
+<div class="profile-country" id="detailsCountry">
+—
+</div>
+
+</div>
+
+</div>
+
+
+<div class="rank-badge">
+
+<div class="rank-badge-label">
+CURRENT RANK
+</div>
+
+<div class="rank-badge-number"
+id="detailsRank">
+—
+</div>
+
+</div>
+
+
+<button
+class="close-details"
+onclick="closeClanDetails()">
+×
+</button>
+
+</div>
+
+</div>
+
+
+<div class="detail-stats">
+
+<div class="detail-stat">
+
+<div class="detail-stat-label">
+POINTS
+</div>
+
+<div class="detail-stat-value"
+id="detailsPoints">
+0
+</div>
+
+</div>
+
+
+<div class="detail-stat">
+
+<div class="detail-stat-label">
+MATCHES
+</div>
+
+<div class="detail-stat-value dark"
+id="detailsMatches">
+0
+</div>
+
+</div>
+
+
+<div class="detail-stat">
+
+<div class="detail-stat-label">
+WINS
+</div>
+
+<div class="detail-stat-value green"
+id="detailsWins">
+0
+</div>
+
+</div>
+
+
+<div class="detail-stat">
+
+<div class="detail-stat-label">
+DRAWS
+</div>
+
+<div class="detail-stat-value dark"
+id="detailsDraws">
+0
+</div>
+
+</div>
+
+
+<div class="detail-stat">
+
+<div class="detail-stat-label">
+LOSSES
+</div>
+
+<div class="detail-stat-value red"
+id="detailsLosses">
+0
+</div>
+
+</div>
+
+
+<div class="detail-stat">
+
+<div class="detail-stat-label">
+TITLES
+</div>
+
+<div class="detail-stat-value"
+id="detailsTitles">
+0
+</div>
+
+</div>
+
+</div>
+
+
+<div class="progress-card">
+
+<div class="progress-head">
+
+<div class="progress-title">
+WIN RATE
+</div>
+
+<div class="progress-value"
+id="winRateText">
+0%
+</div>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+class="progress-fill"
+id="winRateBar">
+</div>
+
+</div>
+
+</div>
+
+</section>
 
 </main>
 
@@ -843,18 +1273,21 @@ SUPABASE_KEY
 );
 
 
-let activeSeason=null;
+let activeSeason = null;
+let rankingData = [];
 
+
+/* =========================
+   LOAD RANKING
+========================= */
 
 async function loadRanking(){
 
-const rankingBody=
+const rankingBody =
 document.getElementById("rankingBody");
 
 
-/* GET ACTIVE SEASON */
-
-const seasonResult=
+const seasonResult =
 await db
 .from("seasons")
 .select("id,name,status")
@@ -864,28 +1297,25 @@ await db
 
 if(seasonResult.error){
 
-showError(
-seasonResult.error.message
-);
-
+showError(seasonResult.error.message);
 return;
 
 }
 
 
-activeSeason=
+activeSeason =
 seasonResult.data;
 
 
 if(!activeSeason){
 
 document.getElementById("seasonName")
-.textContent="NO ACTIVE SEASON";
+.textContent = "NO ACTIVE SEASON";
 
 document.getElementById("seasonNumber")
-.textContent="—";
+.textContent = "—";
 
-rankingBody.innerHTML=`
+rankingBody.innerHTML = `
 
 <tr>
 
@@ -915,18 +1345,18 @@ return;
 
 
 document.getElementById("seasonName")
-.textContent=
+.textContent =
 activeSeason.name;
 
 
 document.getElementById("seasonNumber")
-.textContent=
+.textContent =
 activeSeason.name;
 
 
 /* GET RANKING */
 
-const rankingResult=
+const rankingResult =
 await db
 .from("season_clans")
 .select(`
@@ -954,29 +1384,19 @@ status
 
 if(rankingResult.error){
 
-showError(
-rankingResult.error.message
-);
-
+showError(rankingResult.error.message);
 return;
 
 }
 
 
-const ranking=
-rankingResult.data||[];
-
-
-/* STATS */
-
-document.getElementById("rankedClans")
-.textContent=
-ranking.length;
+rankingData =
+rankingResult.data || [];
 
 
 /* TOTAL CLANS */
 
-const clansResult=
+const clansResult =
 await db
 .from("clans")
 .select("id",{count:"exact",head:true});
@@ -985,17 +1405,22 @@ await db
 if(!clansResult.error){
 
 document.getElementById("totalClans")
-.textContent=
-clansResult.count||0;
+.textContent =
+clansResult.count || 0;
 
 }
 
 
+document.getElementById("rankedClans")
+.textContent =
+rankingData.length;
+
+
 /* EMPTY */
 
-if(!ranking.length){
+if(!rankingData.length){
 
-rankingBody.innerHTML=`
+rankingBody.innerHTML = `
 
 <tr>
 
@@ -1026,37 +1451,40 @@ return;
 
 /* RENDER */
 
-rankingBody.innerHTML=
-ranking.map((item,index)=>{
+rankingBody.innerHTML =
+rankingData.map((item,index)=>{
 
-const clan=item.clans||{};
+const clan =
+item.clans || {};
 
-let rankHTML=
+
+let rankHTML =
 `<div class="rank-number">
 ${index+1}
 </div>`;
 
-if(index===0){
 
-rankHTML=
+if(index === 0){
+
+rankHTML =
 `<div class="rank-top first">
 1
 </div>`;
 
 }
 
-if(index===1){
+if(index === 1){
 
-rankHTML=
+rankHTML =
 `<div class="rank-top second">
 2
 </div>`;
 
 }
 
-if(index===2){
+if(index === 2){
 
-rankHTML=
+rankHTML =
 `<div class="rank-top third">
 3
 </div>`;
@@ -1066,160 +1494,12 @@ rankHTML=
 
 return `
 
-<tr class="fade">
+<tr
+class="fade"
+onclick="openClanDetails('${item.id}')"
+title="View clan details"
+>
 
 <td>
 ${rankHTML}
-</td>
-
-
-<td>
-
-<div class="clan-cell">
-
-<img
-class="clan-logo"
-src="${safeLogo(clan.logo_url)}"
-onerror="this.src='https://placehold.co/200x200/eaf2ff/075ff5?text=EM'"
->
-
-<div>
-
-<div class="clan-name">
-${escapeHTML(clan.name||"Unknown")}
-</div>
-
-<div class="clan-tag">
-${escapeHTML(clan.tag||"")}
-</div>
-
-</div>
-
-</div>
-
-</td>
-
-
-<td>
-
-<div class="country">
-${escapeHTML(clan.country||"—")}
-</div>
-
-</td>
-
-
-<td>
-
-<div class="points">
-${Number(item.points||0)}
-</div>
-
-</td>
-
-
-<td>
-${Number(item.match||0)}
-</td>
-
-
-<td>
-
-<span class="win">
-${Number(item.win||0)}
-</span>
-
-</td>
-
-
-<td>
-${Number(item.draws||0)}
-</td>
-
-
-<td>
-
-<span class="loss">
-${Number(item.losse||0)}
-</span>
-
-</td>
-
-
-<td>
-${Number(item.titles||0)}
-</td>
-
-</tr>
-
-`;
-
-}).join("");
-
-}
-
-
-function safeLogo(url){
-
-if(
-url &&
-String(url).startsWith("http")
-){
-
-return url;
-
-}
-
-return "https://placehold.co/200x200/eaf2ff/075ff5?text=EM";
-
-}
-
-
-function escapeHTML(value){
-
-return String(value??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-
-function showError(message){
-
-document.getElementById("rankingBody")
-.innerHTML=`
-
-<tr>
-
-<td colspan="9">
-
-<div class="empty">
-
-<div class="empty-title">
-SOMETHING WENT WRONG
-</div>
-
-<div class="empty-text">
-${escapeHTML(message)}
-</div>
-
-</div>
-
-</td>
-
-</tr>
-
-`;
-
-}
-
-
-loadRanking();
-
-</script>
-
-</body>
-</html>
+ </td>
