@@ -1,1525 +1,1531 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-MASTER | Admin</title>
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>E-MASTER | Admin Panel</title>
-
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap"
-      rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-/* =========================================
-   RESET
-========================================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
+:root{
+--blue:#075ff5;
+--dark:#08172e;
+--bg:#f5f8fc;
+--border:#e3eaf3;
+--muted:#78879c;
+--green:#149b68;
+--red:#d74750;
 }
 
 body{
-
-    min-height:100vh;
-
-    background:#f5f8fc;
-
-    color:#091a33;
-
-    font-family:Cairo,sans-serif;
-
-    overflow-x:hidden;
+background:var(--bg);
+color:var(--dark);
+font-family:Cairo,sans-serif;
+min-height:100vh;
 }
 
-button,
-input,
-select{
-
-    font-family:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-
-/* =========================================
-   VARIABLES
-========================================= */
-
-:root{
-
-    --blue:#075ff5;
-
-    --blue-dark:#0346c7;
-
-    --blue-light:#edf4ff;
-
-    --dark:#08172e;
-
-    --text:#182941;
-
-    --muted:#78879c;
-
-    --border:#e3eaf3;
-
-    --green:#149b68;
-
-    --red:#d74750;
-
-    --white:#ffffff;
-
-}
-
-
-/* =========================================
-   LOADING
-========================================= */
-
-#loading{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:9999;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:#f5f8fc;
-
-    transition:.4s;
-}
-
-#loading.hide{
-
-    opacity:0;
-
-    visibility:hidden;
-}
-
-.loading-logo{
-
-    width:62px;
-
-    height:62px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    margin:auto;
-
-    border-radius:16px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue),
-            var(--blue-dark)
-        );
-
-    color:white;
-
-    font-family:Oswald;
-
-    font-size:20px;
-
-    font-weight:700;
-
-    animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-
-    0%,100%{
-        transform:scale(1);
-    }
-
-    50%{
-        transform:scale(1.06);
-    }
-
-}
-
-.loading-text{
-
-    margin-top:12px;
-
-    text-align:center;
-
-    font-family:Oswald;
-
-    font-size:18px;
-}
-
-
-/* =========================================
-   HEADER
-========================================= */
+button,input,select{font-family:inherit}
+button{cursor:pointer}
 
 .header{
-
-    position:sticky;
-
-    top:0;
-
-    z-index:100;
-
-    height:70px;
-
-    background:
-        rgba(255,255,255,.95);
-
-    backdrop-filter:blur(15px);
-
-    border-bottom:
-        1px solid var(--border);
+height:70px;
+background:white;
+border-bottom:1px solid var(--border);
+position:sticky;
+top:0;
+z-index:100;
 }
 
 .header-inner{
-
-    width:min(1200px,94%);
-
-    height:100%;
-
-    margin:auto;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
+width:min(1200px,94%);
+height:100%;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
 }
 
 .brand{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
+display:flex;
+align-items:center;
+gap:10px;
 }
 
 .brand-logo{
-
-    width:42px;
-
-    height:42px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    border-radius:11px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--blue),
-            var(--blue-dark)
-        );
-
-    color:#fff;
-
-    font-family:Oswald;
-
-    font-size:14px;
-
-    font-weight:700;
+width:42px;
+height:42px;
+border-radius:11px;
+background:linear-gradient(135deg,#075ff5,#0346c7);
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:Oswald;
+font-weight:700;
 }
 
 .brand-title{
-
-    font-family:Oswald;
-
-    font-size:20px;
-
-    line-height:1;
+font-family:Oswald;
+font-size:20px;
 }
 
 .brand-sub{
-
-    margin-top:3px;
-
-    color:var(--muted);
-
-    font-size:6px;
-
-    font-weight:900;
-
-    letter-spacing:1.4px;
+font-size:6px;
+font-weight:900;
+color:var(--muted);
+letter-spacing:1px;
 }
 
 .header-right{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
+display:flex;
+gap:7px;
 }
 
-.view-btn,
-.logout-btn{
-
-    border:0;
-
-    padding:9px 12px;
-
-    border-radius:9px;
-
-    font-size:8px;
-
-    font-weight:900;
-
-    text-decoration:none;
-
-    transition:.2s;
+.header-right button,
+.header-right a{
+border:0;
+padding:9px 12px;
+border-radius:9px;
+font-size:8px;
+font-weight:900;
+text-decoration:none;
 }
 
-.view-btn{
-
-    background:var(--blue-light);
-
-    color:var(--blue);
+.view{
+background:#edf4ff;
+color:var(--blue);
 }
 
-.logout-btn{
-
-    background:#fff0f1;
-
-    color:var(--red);
+.logout{
+background:#fff0f1;
+color:var(--red);
 }
-
-.view-btn:hover,
-.logout-btn:hover{
-
-    transform:translateY(-1px);
-}
-
-
-/* =========================================
-   LAYOUT
-========================================= */
 
 .layout{
-
-    width:min(1200px,94%);
-
-    margin:30px auto 60px;
-
-    display:grid;
-
-    grid-template-columns:220px 1fr;
-
-    gap:20px;
+width:min(1200px,94%);
+margin:25px auto 60px;
+display:grid;
+grid-template-columns:210px 1fr;
+gap:20px;
 }
-
-
-/* =========================================
-   SIDEBAR
-========================================= */
 
 .sidebar{
-
-    position:sticky;
-
-    top:90px;
-
-    align-self:start;
-
-    padding:10px;
-
-    background:white;
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    box-shadow:
-        0 10px 30px
-        rgba(20,50,90,.035);
-}
-
-.side-title{
-
-    padding:9px 10px;
-
-    color:#9aa6b6;
-
-    font-size:6px;
-
-    font-weight:900;
-
-    letter-spacing:1.4px;
+background:white;
+border:1px solid var(--border);
+border-radius:16px;
+padding:8px;
+height:max-content;
+position:sticky;
+top:90px;
 }
 
 .side-btn{
-
-    width:100%;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:9px;
-
-    border:0;
-
-    padding:11px;
-
-    margin-bottom:3px;
-
-    border-radius:9px;
-
-    background:transparent;
-
-    color:#63738a;
-
-    text-align:left;
-
-    font-size:8px;
-
-    font-weight:900;
-
-    transition:.2s;
+width:100%;
+border:0;
+background:transparent;
+padding:11px;
+border-radius:9px;
+text-align:left;
+font-size:8px;
+font-weight:900;
+color:#65758b;
+margin-bottom:3px;
 }
 
 .side-btn:hover{
-
-    background:var(--blue-light);
-
-    color:var(--blue);
+background:#edf4ff;
+color:var(--blue);
 }
 
 .side-btn.active{
-
-    background:var(--blue);
-
-    color:white;
-
-    box-shadow:
-        0 8px 20px
-        rgba(7,95,245,.16);
+background:var(--blue);
+color:white;
 }
 
+.content{min-width:0}
 
-/* =========================================
-   CONTENT
-========================================= */
+.page{display:none;animation:in .3s ease}
+.page.active{display:block}
 
-.content{
-
-    min-width:0;
+@keyframes in{
+from{opacity:0;transform:translateY(8px)}
+to{opacity:1;transform:translateY(0)}
 }
-
-.page{
-
-    display:none;
-
-    animation:pageIn .3s ease;
-}
-
-.page.active{
-
-    display:block;
-}
-
-@keyframes pageIn{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(8px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
-}
-
-
-/* =========================================
-   PAGE HEAD
-========================================= */
 
 .page-head{
-
-    display:flex;
-
-    align-items:end;
-
-    justify-content:space-between;
-
-    gap:15px;
-
-    margin-bottom:18px;
+display:flex;
+align-items:end;
+justify-content:space-between;
+margin-bottom:18px;
+gap:15px;
 }
 
 .page-small{
-
-    color:var(--blue);
-
-    font-size:7px;
-
-    font-weight:900;
-
-    letter-spacing:1.6px;
+font-size:7px;
+font-weight:900;
+color:var(--blue);
+letter-spacing:1.5px;
 }
 
 .page-title{
-
-    margin-top:3px;
-
-    font-family:Oswald;
-
-    font-size:31px;
+font-family:Oswald;
+font-size:32px;
+margin-top:3px;
 }
 
 .page-desc{
-
-    margin-top:4px;
-
-    color:var(--muted);
-
-    font-size:7px;
+font-size:7px;
+color:var(--muted);
 }
 
-
-/* =========================================
-   CARDS
-========================================= */
-
 .card{
-
-    padding:20px;
-
-    margin-bottom:16px;
-
-    background:white;
-
-    border:1px solid var(--border);
-
-    border-radius:16px;
-
-    box-shadow:
-        0 10px 30px
-        rgba(20,50,90,.035);
+background:white;
+border:1px solid var(--border);
+border-radius:16px;
+padding:20px;
+margin-bottom:16px;
 }
 
 .card-title{
-
-    margin-bottom:14px;
-
-    font-family:Oswald;
-
-    font-size:20px;
+font-family:Oswald;
+font-size:20px;
+margin-bottom:14px;
 }
 
-
-/* =========================================
-   FORM
-========================================= */
-
-.form-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:12px;
+.primary{
+border:0;
+background:var(--blue);
+color:white;
+padding:10px 14px;
+border-radius:9px;
+font-size:8px;
+font-weight:900;
 }
 
-.field.full{
-
-    grid-column:1/-1;
+.secondary{
+border:1px solid var(--border);
+background:white;
+color:#65758b;
+padding:9px 13px;
+border-radius:9px;
+font-size:8px;
+font-weight:900;
 }
 
-.field label{
-
-    display:block;
-
-    margin-bottom:6px;
-
-    color:#62728a;
-
-    font-size:7px;
-
-    font-weight:900;
+.danger{
+border:0;
+background:#fff0f1;
+color:var(--red);
+padding:8px 10px;
+border-radius:8px;
+font-size:7px;
+font-weight:900;
 }
 
-.field input,
-.field select{
-
-    width:100%;
-
-    height:43px;
-
-    padding:0 12px;
-
-    border:1px solid #dce5ef;
-
-    border-radius:9px;
-
-    background:#fbfcfe;
-
-    outline:none;
-
-    color:var(--text);
-
-    font-size:8px;
-
-    transition:.2s;
+.add-ranking{
+border:0;
+background:#e9f8f2;
+color:var(--green);
+padding:8px 10px;
+border-radius:8px;
+font-size:7px;
+font-weight:900;
 }
 
-.field input:focus,
-.field select:focus{
-
-    background:white;
-
-    border-color:var(--blue);
-
-    box-shadow:
-        0 0 0 4px
-        rgba(7,95,245,.07);
+.add-ranking.added{
+background:#edf4ff;
+color:var(--blue);
 }
 
-
-/* =========================================
-   BUTTONS
-========================================= */
-
-.primary-btn{
-
-    border:0;
-
-    padding:11px 15px;
-
-    border-radius:9px;
-
-    background:var(--blue);
-
-    color:white;
-
-    font-size:8px;
-
-    font-weight:900;
-
-    transition:.2s;
+.edit{
+border:0;
+background:#edf4ff;
+color:var(--blue);
+padding:8px 10px;
+border-radius:8px;
+font-size:7px;
+font-weight:900;
 }
-
-.primary-btn:hover{
-
-    background:var(--blue-dark);
-
-    transform:translateY(-1px);
-}
-
-.secondary-btn{
-
-    border:1px solid var(--border);
-
-    padding:10px 14px;
-
-    border-radius:9px;
-
-    background:white;
-
-    color:#607089;
-
-    font-size:8px;
-
-    font-weight:900;
-}
-
-.danger-btn{
-
-    border:0;
-
-    padding:8px 10px;
-
-    border-radius:8px;
-
-    background:#fff0f1;
-
-    color:var(--red);
-
-    font-size:7px;
-
-    font-weight:900;
-}
-
-.edit-btn{
-
-    border:0;
-
-    padding:8px 10px;
-
-    border-radius:8px;
-
-    background:var(--blue-light);
-
-    color:var(--blue);
-
-    font-size:7px;
-
-    font-weight:900;
-}
-
-.button-row{
-
-    display:flex;
-
-    gap:7px;
-
-    flex-wrap:wrap;
-
-    margin-top:14px;
-}
-
-
-/* =========================================
-   CLAN TABLE
-========================================= */
 
 .table-wrap{
+overflow:auto;
+border:1px solid var(--border);
+border-radius:12px;
+}
 
-    overflow:auto;
-
-    border:1px solid var(--border);
-
-    border-radius:12px;
+table{
+width:100%;
+border-collapse:collapse;
 }
 
 .clan-table{
-
-    width:100%;
-
-    min-width:650px;
-
-    border-collapse:collapse;
+min-width:750px;
 }
 
-.clan-table th{
-
-    padding:11px;
-
-    background:#f8fafd;
-
-    color:#8290a2;
-
-    border-bottom:
-        1px solid var(--border);
-
-    font-size:6px;
-
-    font-weight:900;
-
-    text-align:left;
+th{
+padding:11px;
+background:#f8fafd;
+color:#8290a2;
+font-size:6px;
+font-weight:900;
+text-align:left;
+border-bottom:1px solid var(--border);
 }
 
-.clan-table td{
-
-    padding:11px;
-
-    border-bottom:
-        1px solid #edf1f6;
-
-    font-size:8px;
-
-    vertical-align:middle;
+td{
+padding:10px;
+font-size:8px;
+border-bottom:1px solid #edf1f6;
 }
 
-.clan-table tr:last-child td{
-
-    border-bottom:0;
+.logo{
+width:38px;
+height:38px;
+object-fit:contain;
+padding:4px;
+border-radius:9px;
+background:#f1f5fa;
 }
 
-.table-logo{
-
-    width:38px;
-
-    height:38px;
-
-    padding:4px;
-
-    object-fit:contain;
-
-    border-radius:9px;
-
-    background:#f1f5fa;
-
-    border:1px solid #e5ebf3;
-}
-
-.clan-name-cell{
-
-    font-weight:900;
-}
-
-.clan-tag-cell{
-
-    color:var(--muted);
-
-    font-size:6px;
-
-    margin-top:2px;
+.tag{
+color:var(--muted);
+font-size:6px;
 }
 
 .status{
-
-    display:inline-block;
-
-    padding:5px 8px;
-
-    border-radius:20px;
-
-    font-size:6px;
-
-    font-weight:900;
+padding:5px 8px;
+border-radius:20px;
+font-size:6px;
+font-weight:900;
 }
 
-.status.active{
-
-    background:#e8f8f1;
-
-    color:var(--green);
+.active-status{
+background:#e8f8f1;
+color:var(--green);
 }
 
-.status.inactive{
-
-    background:#fff0f1;
-
-    color:var(--red);
+.inactive-status{
+background:#fff0f1;
+color:var(--red);
 }
 
+.form-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
 
-/* =========================================
-   RANKING TABLE
-========================================= */
+.field.full{
+grid-column:1/-1;
+}
+
+label{
+display:block;
+font-size:7px;
+font-weight:900;
+color:#62728a;
+margin-bottom:6px;
+}
+
+input,select{
+width:100%;
+height:43px;
+border:1px solid #dce5ef;
+border-radius:9px;
+background:#fbfcfe;
+padding:0 12px;
+outline:none;
+font-size:8px;
+}
+
+input:focus,select:focus{
+border-color:var(--blue);
+box-shadow:0 0 0 4px rgba(7,95,245,.07);
+}
+
+.button-row{
+display:flex;
+gap:7px;
+margin-top:14px;
+flex-wrap:wrap;
+}
 
 .ranking-table{
-
-    width:100%;
-
-    min-width:850px;
-
-    border-collapse:collapse;
+min-width:850px;
 }
 
-.ranking-table th{
-
-    padding:11px;
-
-    background:#f8fafd;
-
-    color:#8290a2;
-
-    border-bottom:
-        1px solid var(--border);
-
-    font-size:6px;
-
-    font-weight:900;
-
-    text-align:center;
-}
-
+.ranking-table th,
 .ranking-table td{
-
-    padding:9px 7px;
-
-    border-bottom:
-        1px solid #edf1f6;
-
-    text-align:center;
-}
-
-.ranking-table input{
-
-    width:65px;
-
-    height:34px;
-
-    padding:0 6px;
-
-    border:1px solid #dce5ef;
-
-    border-radius:7px;
-
-    outline:none;
-
-    text-align:center;
-
-    font-family:Oswald;
-
-    font-size:13px;
-}
-
-.ranking-table input:focus{
-
-    border-color:var(--blue);
+text-align:center;
 }
 
 .rank-logo{
-
-    width:34px;
-
-    height:34px;
-
-    object-fit:contain;
-
-    padding:4px;
-
-    border-radius:8px;
-
-    background:#f1f5fa;
+width:34px;
+height:34px;
+object-fit:contain;
+padding:4px;
+border-radius:8px;
+background:#f1f5fa;
 }
 
-
-/* =========================================
-   SEASON
-========================================= */
-
-.season-status{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:7px;
-
-    padding:10px 12px;
-
-    background:var(--blue-light);
-
-    color:var(--blue);
-
-    border-radius:9px;
-
-    font-size:7px;
-
-    font-weight:900;
+.rank-input{
+width:60px;
+height:34px;
+text-align:center;
+padding:0 5px;
+font-family:Oswald;
+font-size:13px;
 }
-
-
-/* =========================================
-   MESSAGE
-========================================= */
-
-#message{
-
-    position:fixed;
-
-    right:18px;
-
-    bottom:18px;
-
-    z-index:1000;
-
-    max-width:320px;
-
-    padding:12px 15px;
-
-    border-radius:10px;
-
-    background:var(--dark);
-
-    color:white;
-
-    font-size:8px;
-
-    font-weight:800;
-
-    box-shadow:
-        0 15px 35px
-        rgba(0,0,0,.15);
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transform:translateY(10px);
-
-    transition:.25s;
-}
-
-#message.show{
-
-    opacity:1;
-
-    visibility:visible;
-
-    transform:translateY(0);
-}
-
-#message.success{
-
-    background:var(--green);
-}
-
-#message.error{
-
-    background:var(--red);
-}
-
-
-/* =========================================
-   MODAL
-========================================= */
 
 .modal{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:500;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:20px;
-
-    background:
-        rgba(4,17,38,.55);
-
-    backdrop-filter:blur(7px);
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transition:.25s;
+position:fixed;
+inset:0;
+z-index:500;
+background:rgba(4,17,38,.55);
+backdrop-filter:blur(7px);
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+opacity:0;
+visibility:hidden;
+transition:.25s;
 }
 
 .modal.show{
-
-    opacity:1;
-
-    visibility:visible;
+opacity:1;
+visibility:visible;
 }
 
 .modal-box{
-
-    width:min(550px,100%);
-
-    max-height:90vh;
-
-    overflow:auto;
-
-    background:white;
-
-    border-radius:18px;
-
-    box-shadow:
-        0 30px 80px
-        rgba(0,0,0,.20);
-
-    transform:
-        translateY(15px)
-        scale(.98);
-
-    transition:.25s;
-}
-
-.modal.show .modal-box{
-
-    transform:
-        translateY(0)
-        scale(1);
+width:min(550px,100%);
+max-height:90vh;
+overflow:auto;
+background:white;
+border-radius:18px;
 }
 
 .modal-head{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:18px 20px;
-
-    border-bottom:
-        1px solid var(--border);
+padding:18px 20px;
+border-bottom:1px solid var(--border);
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 .modal-title{
-
-    font-family:Oswald;
-
-    font-size:22px;
+font-family:Oswald;
+font-size:22px;
 }
 
 .close{
-
-    width:32px;
-
-    height:32px;
-
-    border:0;
-
-    border-radius:8px;
-
-    background:#f1f4f8;
-
-    color:#65758b;
-
-    font-size:17px;
+border:0;
+background:#f1f4f8;
+border-radius:8px;
+width:32px;
+height:32px;
+font-size:18px;
 }
 
-.modal-body{
+.modal-body{padding:20px}
 
-    padding:20px;
+#message{
+position:fixed;
+right:18px;
+bottom:18px;
+z-index:1000;
+padding:12px 15px;
+border-radius:10px;
+background:var(--dark);
+color:white;
+font-size:8px;
+font-weight:800;
+opacity:0;
+visibility:hidden;
+transform:translateY(10px);
+transition:.25s;
 }
 
+#message.show{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+}
 
-/* =========================================
-   RESPONSIVE
-========================================= */
+#message.success{background:var(--green)}
+#message.error{background:var(--red)}
 
 @media(max-width:850px){
 
-    .layout{
+.layout{
+grid-template-columns:1fr;
+}
 
-        grid-template-columns:1fr;
-    }
+.sidebar{
+position:static;
+display:flex;
+overflow:auto;
+gap:4px;
+}
 
-    .sidebar{
-
-        position:static;
-
-        display:flex;
-
-        gap:4px;
-
-        overflow:auto;
-
-        padding:6px;
-    }
-
-    .side-title{
-
-        display:none;
-    }
-
-    .side-btn{
-
-        min-width:max-content;
-
-        margin:0;
-
-    }
+.side-btn{
+min-width:max-content;
+margin:0;
+}
 
 }
 
 @media(max-width:600px){
 
-    .header{
-
-        height:64px;
-    }
-
-    .header-inner{
-
-        width:94%;
-    }
-
-    .brand-title{
-
-        font-size:18px;
-    }
-
-    .brand-sub{
-
-        font-size:5px;
-    }
-
-    .view-btn{
-
-        display:none;
-    }
-
-    .layout{
-
-        width:94%;
-
-        margin-top:18px;
-    }
-
-    .page-title{
-
-        font-size:27px;
-    }
-
-    .page-head{
-
-        align-items:flex-start;
-
-        flex-direction:column;
-    }
-
-    .form-grid{
-
-        grid-template-columns:1fr;
-    }
-
-    .field.full{
-
-        grid-column:auto;
-    }
-
-    .card{
-
-        padding:15px;
-    }
-
+.form-grid{
+grid-template-columns:1fr;
 }
 
+.field.full{
+grid-column:auto;
+}
+
+.page-head{
+align-items:flex-start;
+flex-direction:column;
+}
+
+.view{display:none}
+
+.card{padding:15px}
+
+}
 </style>
-
 </head>
-
 
 <body>
 
+<header class="header">
 
-<!-- =========================================
-     LOADING
-========================================= -->
+<div class="header-inner">
 
-<div id="loading">
+<div class="brand">
 
-    <div>
+<div class="brand-logo">EM</div>
 
-        <div class="loading-logo">
-            EM
-        </div>
-
-        <div class="loading-text">
-            ADMIN PANEL
-        </div>
-
-    </div>
+<div>
+<div class="brand-title">E-MASTER</div>
+<div class="brand-sub">ADMINISTRATION PANEL</div>
+</div>
 
 </div>
 
+<div class="header-right">
 
-<!-- =========================================
-     HEADER
-========================================= -->
+<a href="index.html" class="view">
+VIEW WEBSITE
+</a>
 
-<header class="header">
+<button class="logout" onclick="logout()">
+LOGOUT
+</button>
 
-    <div class="header-inner">
+</div>
 
-
-        <div class="brand">
-
-            <div class="brand-logo">
-                EM
-            </div>
-
-            <div>
-
-                <div class="brand-title">
-                    E-MASTER
-                </div>
-
-                <div class="brand-sub">
-                    ADMINISTRATION PANEL
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="header-right">
-
-            <a
-                href="index.html"
-                class="view-btn"
-            >
-                VIEW WEBSITE
-            </a>
-
-            <button
-                class="logout-btn"
-                onclick="logout()"
-            >
-                LOGOUT
-            </button>
-
-        </div>
-
-
-    </div>
+</div>
 
 </header>
 
 
-<!-- =========================================
-     LAYOUT
-========================================= -->
-
 <div class="layout">
 
+<aside class="sidebar">
 
-    <!-- SIDEBAR -->
+<button class="side-btn active" data-page="dashboard" onclick="openPage('dashboard')">
+◈ Dashboard
+</button>
 
-    <aside class="sidebar">
+<button class="side-btn" data-page="clans" onclick="openPage('clans')">
+◈ Clans
+</button>
 
-        <div class="side-title">
-            MANAGEMENT
-        </div>
+<button class="side-btn" data-page="ranking" onclick="openPage('ranking')">
+◈ Ranking
+</button>
 
+<button class="side-btn" data-page="seasons" onclick="openPage('seasons')">
+◈ Seasons
+</button>
 
-        <button
-            class="side-btn active"
-            data-page="dashboard"
-            onclick="openPage('dashboard')"
-        >
-            ◈ Dashboard
-        </button>
-
-
-        <button
-            class="side-btn"
-            data-page="clans"
-            onclick="openPage('clans')"
-        >
-            ◈ Clans
-        </button>
+</aside>
 
 
-        <button
-            class="side-btn"
-            data-page="ranking"
-            onclick="openPage('ranking')"
-        >
-            ◈ Ranking
-        </button>
+<main class="content">
 
 
-        <button
-            class="side-btn"
-            data-page="seasons"
-            onclick="openPage('seasons')"
-        >
-            ◈ Seasons
-        </button>
+<section id="page-dashboard" class="page active">
 
-    </aside>
+<div class="page-head">
 
+<div>
+<div class="page-small">CONTROL CENTER</div>
+<h1 class="page-title">Dashboard</h1>
+<p class="page-desc">Manage your E-MASTER ranking system.</p>
+</div>
 
-    <!-- CONTENT -->
+</div>
 
-    <main class="content">
+<div class="card">
 
+<div class="card-title">Current Season</div>
 
-        <!-- =================================
-             DASHBOARD
-        ================================== -->
+<div id="dashboardSeason"
+style="font-size:8px;font-weight:900;color:#075ff5">
+Loading...
+</div>
 
-        <section
-            id="page-dashboard"
-            class="page active"
-        >
+</div>
 
-            <div class="page-head">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
 
-                <div>
+<div class="card">
+<div style="font-size:7px;color:#78879c;font-weight:900">CLANS</div>
+<div id="statClans" style="font:32px Oswald;color:#075ff5">0</div>
+</div>
 
-                    <div class="page-small">
-                        CONTROL CENTER
-                    </div>
+<div class="card">
+<div style="font-size:7px;color:#78879c;font-weight:900">RANKED</div>
+<div id="statRanked" style="font:32px Oswald;color:#075ff5">0</div>
+</div>
 
-                    <h1 class="page-title">
-                        Dashboard
-                    </h1>
+<div class="card">
+<div style="font-size:7px;color:#78879c;font-weight:900">SEASON</div>
+<div id="statSeason" style="font:20px Oswald;color:#075ff5">—</div>
+</div>
 
-                    <p class="page-desc">
-                        Manage your E-MASTER ranking system.
-                    </p>
+</div>
 
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-title">
-                    Current Season
-                </div>
-
-                <div
-                    id="dashboardSeason"
-                    class="season-status"
-                >
-                    Loading...
-                </div>
-
-            </div>
+</section>
 
 
-            <div
-                style="
-                    display:grid;
-                    grid-template-columns:
-                        repeat(3,1fr);
-                    gap:12px;
-                "
-                id="dashboardStats"
-            >
+<section id="page-clans" class="page">
 
-                <div class="card">
+<div class="page-head">
 
-                    <div
-                        style="
-                            color:#78879c;
-                            font-size:7px;
-                            font-weight:900;
-                        "
-                    >
-                        CLANS
-                    </div>
+<div>
+<div class="page-small">CLAN MANAGEMENT</div>
+<h1 class="page-title">Clans</h1>
+<p class="page-desc">Manage clans and add them to the current ranking.</p>
+</div>
 
-                    <div
-                        id="statClans"
-                        style="
-                            margin-top:5px;
-                            color:#075ff5;
-                            font-family:Oswald;
-                            font-size:32px;
-                        "
-                    >
-                        0
-                    </div>
+<button class="primary" onclick="openClanModal()">
++ ADD CLAN
+</button>
 
-                </div>
+</div>
 
 
-                <div class="card">
+<div class="card">
 
-                    <div
-                        style="
-                            color:#78879c;
-                            font-size:7px;
-                            font-weight:900;
-                        "
-                    >
-                        RANKED CLANS
-                    </div>
+<div class="table-wrap">
 
-                    <div
-                        id="statRanked"
-                        style="
-                            margin-top:5px;
-                            color:#075ff5;
-                            font-family:Oswald;
-                            font-size:32px;
-                        "
-                    >
-                        0
-                    </div>
+<table class="clan-table">
 
-                </div>
+<thead>
 
+<tr>
+<th>LOGO</th>
+<th>CLAN</th>
+<th>COUNTRY</th>
+<th>STATUS</th>
+<th>RANKING</th>
+<th>ACTIONS</th>
+</tr>
 
-                <div class="card">
+</thead>
 
-                    <div
-                        style="
-                            color:#78879c;
-                            font-size:7px;
-                            font-weight:900;
-                        "
-                    >
-                        ACTIVE SEASON
-                    </div>
+<tbody id="clansTable">
 
-                    <div
-                        id="statSeason"
-                        style="
-                            margin-top:5px;
-                            color:#075ff5;
-                            font-family:Oswald;
-                            font-size:20px;
-                        "
-                    >
-                        —
-                    </div>
+<tr>
+<td colspan="6" style="text-align:center;padding:30px;color:#78879c">
+Loading...
+</td>
+</tr>
 
-                </div>
+</tbody>
 
-            </div>
+</table>
 
-        </section>
+</div>
+
+</div>
+
+</section>
 
 
-        <!-- =================================
-             CLANS
-        ================================== -->
+<section id="page-ranking" class="page">
 
-        <section
-            id="page-clans"
-            class="page"
-        >
+<div class="page-head">
 
-            <div class="page-head">
+<div>
+<div class="page-small">POINTS MANAGEMENT</div>
+<h1 class="page-title">Ranking</h1>
+<p class="page-desc">Manage the statistics of clans in the current season.</p>
+</div>
 
-                <div>
+</div>
 
-                    <div class="page-small">
-                        CLAN MANAGEMENT
-                    </div>
+<div class="card">
 
-                    <h1 class="page-title">
-                        Clans
-                    </h1>
+<div id="rankingSeasonInfo"
+style="margin-bottom:15px;font-size:8px;font-weight:900;color:#075ff5">
+Loading...
+</div>
 
-                    <p class="page-desc">
-         
+<div class="table-wrap">
+
+<table class="ranking-table">
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>CLAN</th>
+<th>POINTS</th>
+<th>MATCH</th>
+<th>W</th>
+<th>D</th>
+<th>L</th>
+<th>TITLES</th>
+<th>SAVE</th>
+</tr>
+
+</thead>
+
+<tbody id="rankingTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="page-seasons" class="page">
+
+<div class="page-head">
+
+<div>
+<div class="page-small">SEASON MANAGEMENT</div>
+<h1 class="page-title">Seasons</h1>
+<p class="page-desc">Create and activate ranking seasons.</p>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">Create Season</div>
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>SEASON NAME</label>
+
+<input id="seasonNameInput" placeholder="E-MASTER SEASON 1">
+
+</div>
+
+<div class="field">
+
+<label>STATUS</label>
+
+<select id="seasonStatusInput">
+
+<option value="active">Active</option>
+<option value="inactive">Inactive</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="button-row">
+
+<button class="primary" onclick="createSeason()">
+CREATE SEASON
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">Existing Seasons</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>NAME</th>
+<th>STATUS</th>
+<th>ACTION</th>
+</tr>
+
+</thead>
+
+<tbody id="seasonsTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+</div>
+
+
+<div id="clanModal" class="modal" onclick="closeOutside(event)">
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+<div id="clanModalTitle" class="modal-title">
+Add Clan
+</div>
+
+<button class="close" onclick="closeClanModal()">×</button>
+
+</div>
+
+<div class="modal-body">
+
+<input type="hidden" id="editClanId">
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>CLAN NAME</label>
+
+<input id="clanNameInput" placeholder="Example Clan">
+
+</div>
+
+<div class="field">
+
+<label>TAG</label>
+
+<input id="clanTagInput" placeholder="EXM">
+
+</div>
+
+<div class="field full">
+
+<label>LOGO URL</label>
+
+<input id="clanLogoInput" placeholder="https://...">
+
+</div>
+
+<div class="field">
+
+<label>COUNTRY</label>
+
+<input id="clanCountryInput" placeholder="Morocco">
+
+</div>
+
+<div class="field">
+
+<label>STATUS</label>
+
+<select id="clanStatusInput">
+
+<option value="active">Active</option>
+<option value="inactive">Inactive</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="button-row">
+
+<button class="primary" onclick="saveClan()">
+SAVE CLAN
+</button>
+
+<button class="secondary" onclick="closeClanModal()">
+CANCEL
+</button>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div id="message"></div>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://zapkpfsnxzgjaescmhqp.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_wIDyxzcK3VX0jGYU8THdAA_mW6njIY4";
+
+const db =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+let currentUser=null;
+let activeSeason=null;
+let clans=[];
+let seasonClans=[];
+let seasons=[];
+
+
+async function init(){
+
+const session =
+await db.auth.getSession();
+
+currentUser =
+session.data.session?.user || null;
+
+if(!currentUser){
+
+window.location.href="login.html";
+return;
+
+}
+
+const admin =
+await db
+.from("admin_users")
+.select("user_id")
+.eq("user_id",currentUser.id)
+.maybeSingle();
+
+if(admin.error || !admin.data){
+
+await db.auth.signOut();
+window.location.href="login.html";
+return;
+
+}
+
+await loadAll();
+
+}
+
+
+async function loadAll(){
+
+await loadSeasons();
+await loadClans();
+await loadRanking();
+updateDashboard();
+
+}
+
+
+function openPage(page){
+
+document.querySelectorAll(".page")
+.forEach(x=>x.classList.remove("active"));
+
+document.getElementById("page-"+page)
+.classList.add("active");
+
+document.querySelectorAll(".side-btn")
+.forEach(x=>x.classList.remove("active"));
+
+document
+.querySelector(`.side-btn[data-page="${page}"]`)
+.classList.add("active");
+
+}
+
+
+async function loadClans(){
+
+const result =
+await db
+.from("clans")
+.select("id,name,tag,logo_url,country,status")
+.order("name",{ascending:true});
+
+if(result.error){
+
+showMessage(result.error.message,"error");
+return;
+
+}
+
+clans=result.data||[];
+
+renderClans();
+
+}
+
+
+function renderClans(){
+
+const table=
+document.getElementById("clansTable");
+
+if(!clans.length){
+
+table.innerHTML=`
+<tr>
+<td colspan="6"
+style="text-align:center;padding:30px;color:#78879c">
+No clans yet.
+</td>
+</tr>`;
+return;
+
+}
+
+const rankedIds=
+new Set(
+seasonClans.map(x=>x.clan_id)
+);
+
+table.innerHTML=
+clans.map(clan=>{
+
+const ranked=
+rankedIds.has(clan.id);
+
+return `
+
+<tr>
+
+<td>
+
+<img
+class="logo"
+src="${safeLogo(clan.logo_url)}"
+onerror="this.src='https://placehold.co/200x200/eaf2ff/075ff5?text=EM'"
+>
+
+</td>
+
+<td>
+
+<strong>
+${escapeHTML(clan.name)}
+</strong>
+
+<div class="tag">
+${escapeHTML(clan.tag)}
+</div>
+
+</td>
+
+<td>
+${escapeHTML(clan.country||"—")}
+</td>
+
+<td>
+
+<span class="status ${
+clan.status==="active"
+?"active-status"
+:"inactive-status"
+}">
+
+${clan.status==="active"
+?"ACTIVE"
+:"INACTIVE"}
+
+</span>
+
+</td>
+
+<td>
+
+${
+activeSeason
+?
+ranked
+?
+`<button class="add-ranking added" disabled>
+✓ ADDED
+</button>`
+:
+`<button class="add-ranking"
+onclick="addToRanking('${clan.id}')">
++ ADD
+</button>`
+:
+`<span style="font-size:7px;color:#78879c">
+NO SEASON
+</span>`
+}
+
+</td>
+
+<td>
+
+<div style="display:flex;gap:5px">
+
+<button class="edit"
+onclick="editClan('${clan.id}')">
+EDIT
+</button>
+
+<button class="danger"
+onclick="deleteClan('${clan.id}')">
+DELETE
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+}
+
+
+async function addToRanking(clanId){
+
+if(!activeSeason){
+
+showMessage(
+"Create an active season first.",
+"error"
+);
+
+return;
+
+}
+
+const exists=
+seasonClans.some(
+x=>x.clan_id===clanId
+);
+
+if(exists){
+
+showMessage(
+"This clan is already in the ranking.",
+"error"
+);
+
+return;
+
+}
+
+const result=
+await db
+.from("season_clans")
+.insert({
+
+season_id:activeSeason.id,
+
+clan_id:clanId,
+
+points:0,
+
+match:0,
+
+win:0,
+
+draws:0,
+
+losse:0,
+
+titles:0
+
+});
+
+if(result.error){
+
+showMessage(
+result.error.message,
+"error"
+);
+
+return;
+
+}
+
+showMessage(
+"Clan added to ranking successfully.",
+"success"
+);
+
+await loadRanking();
+renderClans();
+updateDashboard();
+
+}
+
+
+async function loadRanking(){
+
+if(!activeSeason){
+
+document.getElementById("rankingSeasonInfo")
+.textContent="NO ACTIVE SEASON";
+
+document.getElementById("rankingTable")
+.innerHTML=`
+<tr>
+<td colspan="9"
+style="text-align:center;padding:30px;color:#78879c">
+Create an active season first.
+</td>
+</tr>`;
+
+seasonClans=[];
+
+return;
+
+}
+
+document.getElementById("rankingSeasonInfo")
+.textContent=
+"CURRENT SEASON: "+activeSeason.name;
+
+const result=
+await db
+.from("season_clans")
+.select(`
+id,
+season_id,
+clan_id,
+points,
+match,
+win,
+draws,
+losse,
+titles,
+clans(
+id,
+name,
+tag,
+logo_url,
+country,
+status
+)
+`)
+.eq("season_id",activeSeason.id)
+.order("points",{ascending:false});
+
+if(result.error){
+
+showMessage(result.error.message,"error");
+return;
+
+}
+
+seasonClans=result.data||[];
+
+renderRanking();
+
+}
+
+
+function renderRanking(){
+
+const table=
+document.getElementById("rankingTable");
+
+if(!seasonClans.length){
+
+table.innerHTML=`
+<tr>
+<td colspan="9"
+style="text-align:center;padding:30px;color:#78879c">
+No clans in this ranking yet.
+</td>
+</tr>`;
+
+return;
+
+}
+
+table.innerHTML=
+seasonClans.map((item,index)=>`
+
+<tr>
+
+<td>
+<strong>#${index+1}</strong>
+</td>
+
+<td>
+
+<div style="display:flex;align-items:center;gap:7px;text-align:left">
+
+<img
+class="rank-logo"
+src="${safeLogo(item.clans?.logo_url)}"
+>
+
+<div>
+
+<strong>
+${escapeHTML(item.clans?.name||"Unknown")}
+</strong>
+
+<div class="tag">
+${escapeHTML(item.clans?.tag||"")}
+</div>
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+<input class="rank-input"
+id="points-${item.id}"
+type="number"
+min="0"
+value="${Number(item.points||0)}">
+</td>
+
+<td>
+<input class="rank-input"
+id="match-${item.id}"
+type="number"
+min="0"
+value="${Number(item.match||0)}">
+</td>
+
+<td>
+<input class="rank-input"
+id="win-${item.id}"
+type="number"
+min="0"
+value="${Number(item.win||0)}">
+</td>
+
+<td>
+<input class="rank-input"
+id="draws-${item.id}"
+type="number"
+min="0"
+value="${Number(item.draws||0)}">
+</td>
+
+<td>
+<input class="rank-input"
+id="losse-${item.id}"
+type="number"
+min="0"
+value="${Number(item.losse||0)}">
+</td>
+
+<td>
+<input class="rank-input"
+id="titles-${item.id}"
+type="number"
+min="0"
+value="${Number(item.titles||0)}">
+</td>
+
+<td>
+
+<button class="primary"
+style="padding:8px 10px;font-size:7px"
+onclick="saveRanking('${item.id}')">
+SAVE
+</button>
+
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+
+async function saveRanking(id){
+
+const data={
+
+points:Number(document.getElementById("points-"+id).value),
+
+match:Number(document.getElementById("match-"+id).value),
+
+win:Number(document.getElementById("win-"+id).value),
+
+draws:Number(document.getElementById("draws-"+id).value),
+
+losse:Number(document.getElementById("losse-"+id).value),
+
+titles:Number(document.getElementById("titles-"+id).value)
+
+};
+
+const result=
+await db
+.from("season_clans")
+.update(data)
+.eq("id",id);
+
+if(result.error){
+
+showMessage(result.error.message,"error");
+return;
+
+}
+
+showMessage(
+"Ranking updated successfully.",
+"success"
+);
+
+await loadRanking();
+
+}
+
+
+async function loadSeasons(){
+
+const result=
+await db
+.from("seasons")
+.select("id,name,status,created_at")
+.order("created_at",{ascending:false});
+
+if(result.error){
+
+showMessage(result.error.message,"error");
+return;
+
+}
+
+seasons=result.data||[];
+
+activeSeason=
+seasons.find(
+x=>x.status==="active"
+)||null;
+
+renderSeasons();
+
+}
+
+
+async function createSeason(){
+
+const name=
+document.getElementById("seasonNameInput")
+.value.trim();
+
+const status=
+document.getElementById("seasonStatusInput")
+.value;
+
+if(!name){
+
+showMessage(
+"Season name is required.",
+"error"
+);
+
+return;
+
+}
+
+if(status==="active"){
+
+await db
+.from("seasons")
+.update({status:"inactive"})
+.eq("status","active");
+
+}
+
+const result=
+await db
+.from("seasons")
+.insert({
+name:name,
+status:status
+});
+
+if(result.error){
+
+showMessage(result.error.message,"error");
+return;
+
+}
+
+document.getElementById("seasonNameInput").value="";
+
+showMessage(
+"Season created successfully.",
+"success"
+);
+
+await loadSeasons();
+await loadRanking();
+await loadClans();
+updateDashboard();
+
+}
+
+
+function renderSeasons(){
+
+const table=
+document.getElementById("seasonsTable");
+
+if(!seasons.length){
+
+table.innerHTML=`
+<tr>
+<td colspan="3"
+style="text-align:center;padding:30px;color:#78879c">
+No seasons yet.
+</td>
+</tr>`;
+return;
+
+}
+
+table.innerHTML=
+seasons.map(season=>`
+
+<tr>
+
+<td>
+<s
