@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>E-MASTER ADMIN</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
+}
+
+:root{
+ --blue:#0866ff;
+ --dark:#07152d;
+ --bg:#f4f7fb;
+ --white:#fff;
+ --text:#0c1b33;
+ --muted:#718096;
+ --border:#e2e8f0;
+ --green:#16a66a;
+ --red:#e5484d;
+ --gold:#d99b19;
+}
+
+body{
+ font-family:Cairo,sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ min-height:100vh;
+}
+
+button,input,select{
+ font:inherit;
+}
+
+button{
+ cursor:pointer;
+}
+
+.hidden{
+ display:none!important;
+}
+
+/* LOGIN */
+
+.login-page{
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ background:
+ radial-gradient(circle at top right,#dceaff,transparent 35%),
+ linear-gradient(135deg,#f7faff,#edf3fb);
+}
+
+.login-box{
+ width:100%;
+ max-width:420px;
+ background:white;
+ border:1px solid var(--border);
+ border-radius:24px;
+ padding:32px;
+ box-shadow:0 25px 70px rgba(20,60,110,.12);
+ animation:up .5s ease;
+}
+
+.login-logo{
+ width:60px;
+ height:60px;
+ border-radius:17px;
+ display:grid;
+ place-items:center;
+ background:linear-gradient(145deg,#0866ff,#0642ad);
+ color:white;
+ font:700 21px Oswald;
+ margin-bottom:20px;
+ box-shadow:0 12px 30px rgba(8,102,255,.25);
+}
+
+.login-box h1{
+ font:700 32px Oswald;
+}
+
+.login-box p{
+ color:var(--muted);
+ font-size:12px;
+ margin:4px 0 25px;
+}
+
+.field{
+ margin-bottom:14px;
+}
+
+.field label{
+ display:block;
+ font-size:11px;
+ font-weight:800;
+ margin-bottom:6px;
+}
+
+.field input,
+.field select{
+ width:100%;
+ height:46px;
+ border:1px solid var(--border);
+ border-radius:11px;
+ padding:0 13px;
+ outline:none;
+ background:white;
+}
+
+.field input:focus,
+.field select:focus{
+ border-color:var(--blue);
+ box-shadow:0 0 0 4px rgba(8,102,255,.08);
+}
+
+.primary{
+ width:100%;
+ height:46px;
+ border:0;
+ border-radius:11px;
+ background:var(--blue);
+ color:white;
+ font-weight:900;
+ transition:.2s;
+}
+
+.primary:hover{
+ transform:translateY(-2px);
+ box-shadow:0 10px 25px rgba(8,102,255,.2);
+}
+
+.error{
+ margin-top:12px;
+ color:var(--red);
+ background:#fff1f1;
+ border-radius:10px;
+ padding:9px;
+ font-size:11px;
+ text-align:center;
+}
+
+/* APP */
+
+.app{
+ display:none;
+ min-height:100vh;
+}
+
+.topbar{
+ height:70px;
+ position:sticky;
+ top:0;
+ z-index:30;
+ background:rgba(255,255,255,.92);
+ backdrop-filter:blur(16px);
+ border-bottom:1px solid var(--border);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 24px;
+}
+
+.brand{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+
+.brand-mark{
+ width:40px;
+ height:40px;
+ border-radius:11px;
+ background:var(--blue);
+ color:white;
+ display:grid;
+ place-items:center;
+ font:700 16px Oswald;
+}
+
+.brand strong{
+ font:700 18px Oswald;
+}
+
+.brand span{
+ display:block;
+ color:var(--muted);
+ font-size:8px;
+ letter-spacing:1.5px;
+}
+
+.logout{
+ border:1px solid var(--border);
+ background:white;
+ padding:8px 13px;
+ border-radius:9px;
+ font-size:10px;
+ font-weight:800;
+}
+
+.layout{
+ max-width:1250px;
+ margin:auto;
+ padding:25px 20px 60px;
+}
+
+/* DASHBOARD */
+
+.page-title{
+ margin-bottom:20px;
+}
+
+.page-title h1{
+ font:700 38px Oswald;
+}
+
+.page-title p{
+ color:var(--muted);
+ font-size:11px;
+}
+
+.cards{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:14px;
+ margin-bottom:25px;
+}
+
+.stat{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:16px;
+ padding:20px;
+ box-shadow:0 5px 25px rgba(20,60,110,.04);
+}
+
+.stat-label{
+ color:var(--muted);
+ font-size:10px;
+ font-weight:800;
+}
+
+.stat-value{
+ margin-top:5px;
+ font:700 30px Oswald;
+ color:var(--blue);
+}
+
+/* TABS */
+
+.tabs{
+ display:flex;
+ gap:7px;
+ margin-bottom:18px;
+ overflow-x:auto;
+}
+
+.tab{
+ border:1px solid var(--border);
+ background:white;
+ padding:9px 15px;
+ border-radius:10px;
+ font-size:11px;
+ font-weight:900;
+ white-space:nowrap;
+}
+
+.tab.active{
+ background:var(--blue);
+ color:white;
+ border-color:var(--blue);
+}
+
+/* PANEL */
+
+.panel{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:18px;
+ padding:20px;
+ box-shadow:0 5px 25px rgba(20,60,110,.04);
+ animation:up .35s ease;
+}
+
+.panel-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+ margin-bottom:18px;
+}
+
+.panel-head h2{
+ font:600 24px Oswald;
+}
+
+.add-btn{
+ border:0;
+ background:var(--blue);
+ color:white;
+ padding:10px 15px;
+ border-radius:10px;
+ font-size:11px;
+ font-weight:900;
+}
+
+/* CLANS */
+
+.clans{
+ display:flex;
+ flex-direction:column;
+ gap:9px;
+}
+
+.clan{
+ display:grid;
+ grid-template-columns:55px 1fr auto;
+ align-items:center;
+ gap:13px;
+ border:1px solid var(--border);
+ border-radius:13px;
+ padding:10px;
+ transition:.2s;
+}
+
+.clan:hover{
+ border-color:#b8d1ff;
+ transform:translateY(-1px);
+}
+
+.logo{
+ width:50px;
+ height:50px;
+ border-radius:12px;
+ object-fit:contain;
+ background:#eaf2ff;
+ padding:5px;
+}
+
+.clan-name{
+ font-weight:900;
+ font-size:13px;
+}
+
+.clan-meta{
+ color:var(--muted);
+ font-size:9px;
+}
+
+.clan-points{
+ text-align:right;
+ font:600 21px Oswald;
+ color:var(--blue);
+}
+
+.edit{
+ margin-top:4px;
+ border:0;
+ background:#edf4ff;
+ color:var(--blue);
+ padding:5px 8px;
+ border-radius:7px;
+ font-size:9px;
+ font-weight:800;
+}
+
+/* MODAL */
+
+.modal{
+ position:fixed;
+ inset:0;
+ z-index:100;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:15px;
+ background:rgba(5,20,45,.55);
+ backdrop-filter:blur(5px);
+}
+
+.modal.show{
+ display:flex;
+}
+
+.modal-box{
+ width:100%;
+ max-width:550px;
+ max-height:90vh;
+ overflow:auto;
+ background:white;
+ border-radius:20px;
+ padding:23px;
+ animation:up .25s ease;
+}
+
+.modal-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:20px;
+}
+
+.modal-head h2{
+ font:600 25px Oswald;
+}
+
+.close{
+ border:0;
+ background:#f1f4f8;
+ width:32px;
+ height:32px;
+ border-radius:9px;
+ font-weight:900;
+}
+
+.form-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+
+.full{
+ grid-column:1/-1;
+}
+
+.upload{
+ border:2px dashed #cbd8eb;
+ border-radius:13px;
+ padding:20px;
+ text-align:center;
+ background:#f8fbff;
+}
+
+.upload img{
+ width:80px;
+ height:80px;
+ object-fit:contain;
+ background:#eaf2ff;
+ border-radius:15px;
+ display:none;
+ margin:0 auto 10px;
+}
+
+.upload label{
+ color:var(--blue);
+ font-size:11px;
+ font-weight:900;
+ cursor:pointer;
+}
+
+.upload input{
+ display:none;
+}
+
+.save{
+ margin-top:15px;
+ width:100%;
+ height:46px;
+ border:0;
+ border-radius:11px;
+ background:var(--blue);
+ color:white;
+ font-weight:900;
+}
+
+.danger{
+ background:#fff1f1;
+ color:var(--red);
+ border:0;
+ padding:8px 12px;
+ border-radius:9px;
+ font-size:10px;
+ font-weight:900;
+}
+
+.message{
+ padding:10px;
+ border-radius:10px;
+ font-size:11px;
+ margin-bottom:12px;
+ display:none;
+}
+
+.message.success{
+ display:block;
+ background:#eafaf3;
+ color:var(--green);
+}
+
+.message.error{
+ display:block;
+ background:#fff1f1;
+ color:var(--red);
+}
+
+.empty{
+ padding:40px;
+ text-align:center;
+ color:var(--muted);
+ font-size:12px;
+}
+
+/* ANIMATION */
+
+@keyframes up{
+ from{
+  opacity:0;
+  transform:translateY(12px);
+ }
+ to{
+  opacity:1;
+  transform:translateY(0);
+ }
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+ .topbar{
+  padding:0 13px;
+ }
+
+ .layout{
+  padding:18px 12px 50px;
+ }
+
+ .cards{
+  grid-template-columns:1fr 1fr;
+ }
+
+ .stat:last-child{
+  grid-column:1/-1;
+ }
+
+ .page-title h1{
+  font-size:32px;
+ }
+
+ .panel{
+  padding:14px;
+ }
+
+ .panel-head{
+  align-items:flex-start;
+ }
+
+ .clan{
+  grid-template-columns:45px 1fr;
+ }
+
+ .clan-points{
+  grid-column:2;
+  text-align:left;
+  margin-top:-5px;
+ }
+
+ .logo{
+  width:43px;
+  height:43px;
+ }
+
+ .form-grid{
+  grid-template-columns:1fr;
+ }
+
+ .full{
+  grid-column:auto;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<section id="loginPage" class="login-page">
+
+ <div class="login-box">
+
+  <div class="login-logo">EM</div>
+
+  <h1>ADMIN PANEL</h1>
+
+  <p>Secure E-MASTER Ranking Management</p>
+
+  <form id="loginForm">
+
+   <div class="field">
+    <label>EMAIL</label>
+    <input id="email" type="email" required autocomplete="email">
+   </div>
+
+   <div class="field">
+    <label>PASSWORD</label>
+    <input id="password" type="password" required autocomplete="current-password">
+   </div>
+
+   <button class="primary" type="submit">
+    LOGIN
+   </button>
+
+  </form>
+
+  <div id="loginError" class="error hidden"></div>
+
+ </div>
+
+</section>
+
+
+<!-- APP -->
+
+<section id="app" class="app">
+
+ <header class="topbar">
+
+  <div class="brand">
+   <div class="brand-mark">EM</div>
+
+   <div>
+    <strong>E-MASTER</strong>
+    <span>ADMIN CONTROL</span>
+   </div>
+  </div>
+
+  <button id="logout" class="logout">
+   LOGOUT
+  </button>
+
+ </header>
+
+
+ <main class="layout">
+
+  <div class="page-title">
+   <h1>DASHBOARD</h1>
+   <p id="seasonInfo">Loading active season...</p>
+  </div>
+
+
+  <div class="cards">
+
+   <div class="stat">
+    <div class="stat-label">TOTAL CLANS</div>
+    <div id="totalClans" class="stat-value">0</div>
+   </div>
+
+   <div class="stat">
+    <div class="stat-label">ACTIVE SEASON</div>
+    <div id="activeSeason" class="stat-value">—</div>
+   </div>
+
+   <div class="stat">
+    <div class="stat-label">TOTAL POINTS</div>
+    <div id="totalPoints" class="stat-value">0</div>
+   </div>
+
+  </div>
+
+
+  <div class="tabs">
+
+   <button class="tab active" data-tab="clans">
+    CLANS
+   </button>
+
+   <button class="tab" data-tab="points">
+    POINTS
+   </button>
+
+  </div>
+
+
+  <!-- CLANS TAB -->
+
+  <section id="clansTab" class="panel">
+
+   <div class="panel-head">
+
+    <h2>CLAN MANAGEMENT</h2>
+
+    <button id="addClan" class="add-btn">
+     + ADD CLAN
+    </button>
+
+   </div>
+
+   <div id="clansList" class="clans">
+
+    <div class="empty">
+     Loading clans...
+    </div>
+
+   </div>
+
+  </section>
+
+
+  <!-- POINTS TAB -->
+
+  <section id="pointsTab" class="panel hidden">
+
+   <div class="panel-head">
+    <h2>POINT MANAGEMENT</h2>
+   </div>
+
+   <div id="pointsList"></div>
+
+  </section>
+
+ </main>
+
+</section>
+
+
+<!-- CLAN MODAL -->
+
+<div id="clanModal" class="modal">
+
+ <div class="modal-box">
+
+  <div class="modal-head">
+
+   <h2 id="modalTitle">ADD CLAN</h2>
+
+   <button class="close" id="closeModal">
+    ×
+   </button>
+
+  </div>
+
+
+  <div id="clanMessage" class="message"></div>
+
+
+  <form id="clanForm">
+
+   <input id="clanId" type="hidden">
+
+
+   <div class="field full">
+
+    <div class="upload">
+
+     <img id="logoPreview">
+
+     <label for="logoFile">
+      🖼️ SELECT CLAN LOGO
+     </label>
+
+     <input
+      id="logoFile"
+      type="file"
+      accept="image/png,image/jpeg,image/webp"
+     >
+
+     <div style="margin-top:6px;color:#718096;font-size:9px">
+      PNG with transparent background recommended
+     </div>
+
+    </div>
+
+   </div>
+
+
+   <div class="form-grid">
+
+    <div class="field">
+     <label>CLAN NAME</label>
+     <input id="clanName" required>
+    </div>
+
+    <div class="field">
+     <label>TAG</label>
+     <input id="clanTag" maxlength="10" required>
+    </div>
+
+    <div class="field">
+     <label>LEADER</label>
+     <input id="clanLeader" required>
+    </div>
+
+    <div class="field">
+     <label>COUNTRY</label>
+     <input id="clanCountry" placeholder="Morocco" required>
+    </div>
+
+    <div class="field full">
+     <label>STATUS</label>
+
+     <select id="clanStatus">
+      <option value="active">ACTIVE</option>
+      <option value="inactive">INACTIVE</option>
+     </select>
+
+    </div>
+
+   </div>
+
+
+   <button class="save" type="submit">
+    SAVE CLAN
+   </button>
+
+  </form>
+
+ </div>
+
+</div>
+
+
+<!-- POINT MODAL -->
+
+<div id="pointModal" class="modal">
+
+ <div class="modal-box">
+
+  <div class="modal-head">
+
+   <h2>EDIT CLAN STATS</h2>
+
+   <button class="close" id="closePointModal">
+    ×
+   </button>
+
+  </div>
+
+
+  <div id="pointMessage" class="message"></div>
+
+
+  <form id="pointForm">
+
+   <input id="pointSeasonClanId" type="hidden">
+
+
+   <div class="field">
+    <label>CLAN</label>
+    <input id="pointClanName" disabled>
+   </div>
+
+
+   <div class="field">
+    <label>CURRENT POINTS</label>
+    <input id="currentPoints" disabled>
+   </div>
+
+
+   <div class="field">
+    <label>POINT CHANGE</label>
+    <input
+     id="pointChange"
+     type="number"
+     placeholder="Example: 30 or -20"
+     required
+    >
+   </div>
+
+
+   <div class="field">
+    <label>REASON</label>
+    <input
+     id="pointReason"
+     placeholder="Round 1 victory"
+     required
+    >
+   </div>
+
+
+   <div class="form-grid">
+
+    <div class="field">
+     <label>MATCHES</label>
+     <input id="statMatches" type="number" min="0">
+    </div>
+
+    <div class="field">
+     <label>WINS</label>
+     <input id="statWins" type="number" min="0">
+    </div>
+
+    <div class="field">
+     <label>DRAWS</label>
+     <input id="statDraws" type="number" min="0">
+    </div>
+
+    <div class="field">
+     <label>LOSSES</label>
+     <input id="statLosses" type="number" min="0">
+    </div>
+
+    <div class="field">
+     <label>TITLES</label>
+     <input id="statTitles" type="number" min="0">
+    </div>
+
+    <div class="field">
+     <label>RUNNER-UPS</label>
+     <input id="statRunnerUps" type="number" min="0">
+    </div>
+
+   </div>
+
+
+   <button class="save" type="submit">
+    SAVE POINT UPDATE
+   </button>
+
+  </form>
+
+ </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+ SUPABASE
+========================================== */
+
+const SUPABASE_URL =
+"https://zapkpfsnxzgjaescmhqp.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_wIDyxzcK3VX0jGYU8THdAA_mW6njIY4";
+
+const db =
+supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
+
+/* ==========================================
+ STATE
+========================================== */
+
+let activeSeason = null;
+let clans = [];
+let seasonClans = [];
+
+
+/* ==========================================
+ START
+========================================== */
+
+checkSession();
+
+
+async function checkSession(){
+
+ const {
+  data:{
+   session
+  }
+ } = await db.auth.getSession();
+
+ if(!session){
+
+  showLogin();
+
+  return;
+
+ }
+
+ const isAdmin =
+ await checkAdmin(session.user.id);
+
+ if(isAdmin){
+
+  showApp();
+
+ }else{
+
+  await db.auth.signOut();
+
+  showLogin();
+
+  showLoginError(
+   "This account is not authorized as admin."
+  );
+
+ }
+
+}
+
+
+/* ==========================================
+ ADMIN CHECK
+========================================== */
+
+async function checkAdmin(userId){
+
+ const {
+  data,
+  error
+ } = await db
+  .from("admin_users")
+  .select("user_id")
+  .eq("user_id",userId)
+  .maybeSingle();
+
+ if(error){
+
+  console.error(error);
+
+  return false;
+
+ }
+
+ return !!data;
+
+}
+
+
+/* ==========================================
+ LOGIN
+========================================== */
+
+document
+.getElementById("loginForm")
+.addEventListener("submit",async e=>{
+
+ e.preventDefault();
+
+ const email =
+ document.getElementById("email").value.trim();
+
+ const password =
+ document.getElementById("password").value;
+
+
+ const {
+  data,
+  error
+ } = await db.auth.signInWithPassword({
+  email,
+  password
+ });
+
+
+ if(error){
+
+  showLoginError(error.message);
+
+  return;
+
+ }
+
+
+ const isAdmin =
+ await checkAdmin(data.user.id);
+
+
+ if(!isAdmin){
+
+  await db.auth.signOut();
+
+  showLoginError(
+   "This account is not authorized as admin."
+  );
+
+  return;
+
+ }
+
+
+ showApp();
+
+});
+
+
+function showLogin(){
+
+ document
+ .getElementById("loginPage")
+ .style.display="flex";
+
+ document
+ .getElementById("app")
+ .style.display="none";
+
+}
+
+
+function showApp(){
+
+ document
+ .getElementById("loginPage")
+ .style.display="none";
+
+ document
+ .getElementById("app")
+ .style.display="block";
+
+ loadDashboard();
+
+}
+
+
+function showLoginError(text){
+
+ const box =
+ document.getElementById("loginError");
+
+ box.textContent=text;
+
+ box.classList.remove("hidden");
+
+}
+
+
+/* ==========================================
+ LOGOUT
+========================================== */
+
+document
+.getElementById("logout")
+.addEventListener("click",async()=>{
+
+ await db.auth.signOut();
+
+ location.reload();
+
+});
+
+
+/* ==========================================
+ DASHBOARD
+========================================== */
+
+async function loadDashboard(){
+
+ await loadSeason();
+
+ await loadClans();
+
+ await loadSeasonClans();
+
+ renderClans();
+
+ renderPoints();
+
+ updateStats();
+
+}
+
+
+async function loadSeason(){
+
+ const {
+  data,
+  error
+ } = await db
+  .from("seasons")
+  .select("id,name,year,status")
+  .eq("status","active")
+  .order("created_at",{ascending:false})
+  .limit(1)
+  .maybeSingle();
+
+ if(error){
+
+  console.error(error);
+
+  return;
+
+ }
+
+ activeSeason=data;
+
+ if(activeSeason){
+
+  document
+  .getElementById("seasonInfo")
+  .textContent=
+  `${activeSeason.name} · ${activeSeason.year}`;
+
+  document
+  .getElementById("activeSeason")
+  .textContent=
+  activeSeason.name;
+
+ }
+
+}
+
+
+async function loadClans(){
+
+ const {
+  data,
+  error
+ } = await db
+  .from("clans")
+  .select("*")
+  .order("created_at",{ascending:false});
+
+ if(error){
+
+  console.error(error);
+
+  return;
+
+ }
+
+ clans=data || [];
+
+}
+
+
+async function loadSeasonClans(){
+
+ if(!activeSeason){
+
+  seasonClans=[];
+
+  return;
+
+ }
+
+ const {
+  data,
+  error
+ } = await db
+  .from("season_clans")
+  .select(`
+   id,
+   season_id,
+   clan_id,
+   points,
+   matches,
+   wins,
+   draws,
+   losses,
+   titles,
+   runner_ups
+  `)
+  .eq("season_id",activeSeason.id)
+  .order("points",{ascending:false});
+
+ if(error){
+
+  console.error(error);
+
+  return;
+
+ }
+
+ seasonClans=data || [];
+
+}
+
+
+function updateStats(){
+
+ document
+ .getElementById("totalClans")
+ .textContent=clans.length;
+
+ const total =
+ seasonClans.reduce(
+  (sum,x)=>sum+Number(x.points||0),
+  0
+ );
+
+ document
+ .getElementById("totalPoints")
+ .textContent=
+ total.toLocaleString();
+
+}
+
+
+/* ==========================================
+ CLANS LIST
+========================================== */
+
+function renderClans(){
+
+ const box =
+ document.getElementById("clansList");
+
+ if(!clans.length){
+
+  box.innerHTML=`
+   <div class="empty">
+    No clans yet.
+   </div>
+  `;
+
+  return;
+
+ }
+
+
+ box.innerHTML =
+ clans.map(clan=>{
+
+  const sc =
+  seasonClans.find(
+   x=>x.clan_id===clan.id
+  );
+
+  const points =
+  sc ? Number(sc.points||0) : 0;
+
+  return `
+
+   <div class="clan">
+
+    <img
+     class="logo"
+     src="${safeLogo(clan.logo_url)}"
+     alt=""
+    >
+
+    <div>
+
+     <div class="clan-name">
+      ${escapeHTML(clan.name)}
+     </div>
+
+     <div class="clan-meta">
+      ${escapeHTML(clan.tag)}
+      ·
+      ${escapeHTML(clan.country)}
+      ·
+      ${escapeHTML(clan.leader)}
+     </div>
+
+     <button
+      class="edit"
+      onclick="editClan('${clan.id}')"
+     >
+      EDIT
+     </button>
+
+    </div>
+
+    <div class="clan-points">
+     ${points.toLocaleString()}
+     <div style="font:8px Cairo;color:#718096">
+      POINTS
+     </div>
+    </div>
+
+   </div>
+
+  `;
+
+ }).join("");
+
+}
+
+
+/* ==========================================
+ POINTS LIST
+========================================== */
+
+function renderPoints(){
+
+ const box =
+ document.getElementById("pointsList");
+
+ if(!seasonClans.length){
+
+  box.innerHTML=`
+   <div class="empty">
+    Add clans to Season 01 first.
+   </div>
+  `;
+
+  return;
+
+ }
+
+
+ box.innerHTML =
+ seasonClans.map(sc=>{
+
+  const clan =
+  clans.find(
+   c=>c.id===sc.clan_id
+  );
+
+  if(!clan) return "";
+
+  return `
+
+   <div class="clan">
+
+    <img
+     class="logo"
+     src="${safeLogo(clan.logo_url)}"
+     alt=""
+    >
+
+    <div>
+
+     <div class="clan-name">
+      ${escapeHTML(clan.name)}
+     </div>
+
+     <div class="clan-meta">
+      M ${sc.matches}
+      · W ${sc.wins}
+      · D ${sc.draws}
+      · L ${sc.losses}
+      · 🏆 ${sc.titles}
+     </div>
+
+     <button
+      class="edit"
+      onclick="editPoints('${sc.id}')"
+     >
+      EDIT POINTS
+     </button>
+
+    </div>
+
+    <div class="clan-points">
+     ${Number(sc.points||0).toLocaleString()}
+     <div style="font:8px Cairo;color:#718096">
+      P
